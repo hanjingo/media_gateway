@@ -6,18 +6,6 @@ import (
 	"github.com/hanjingo/media_gateway/gateway/util"
 )
 
-func (gate *Gate) InitHttpHandler() {
-	// file
-	gate.Http().SetHandler("GET", "/file/new.html", gate.onNewFileHtml)
-	gate.Http().SetHandler("POST", "/file/new", gate.onNewFile)
-	gate.Http().SetHandler("GET", "/file/search", gate.onSearch)
-
-	// video
-	gate.Http().SetHandler("GET", "/video/play.html", gate.onPlayHtml)
-	gate.Http().SetHandler("GET", "/video/player.html", gate.onPlayerHtml)
-	gate.Http().SetHandler("GET", "/video/play", gate.onPlay)
-}
-
 func (gate *Gate) InitCacheMgr() {
 	gate.Cache().Init()
 

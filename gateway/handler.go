@@ -10,6 +10,19 @@ import (
 	"github.com/hanjingo/media_gateway/gateway/util"
 )
 
+// 注册回调
+func (gate *Gate) InitHttpHandler() {
+	// file
+	gate.Http().SetHandler("GET", "/file/new.html", gate.onNewFileHtml)
+	gate.Http().SetHandler("POST", "/file/new", gate.onNewFile)
+	gate.Http().SetHandler("GET", "/file/search", gate.onSearch)
+
+	// video
+	gate.Http().SetHandler("GET", "/video/play.html", gate.onPlayHtml)
+	gate.Http().SetHandler("GET", "/video/player.html", gate.onPlayerHtml)
+	gate.Http().SetHandler("GET", "/video/play", gate.onPlay)
+}
+
 /************************* video ***************************/
 // http Get >> 127.0.0.1:10086/play/htm
 func (g *Gate) onPlayHtml(ctx *gin.Context) {
@@ -61,22 +74,6 @@ func (g *Gate) onNewFileHtml(ctx *gin.Context) {
 	ctx.HTML(http.StatusOK, "new_file.html", nil)
 }
 
-type SearchReq struct {
-	Tag   []string `json:"tag"`
-	Page  int      `json:"page"`
-	Limit int      `json:"limit"`
-}
-type SearchRsp struct {
-	Result uint32 `json:"result"`
-}
-type SearchDetail struct {
-	Tag     []string `json:"tag"`
-	Page    int      `json:"page"`
-	Limit   int      `json:"limit"`
-	MaxPage int      `json:"max_page"`
-	Results []string `json:"results"`
-}
-
 // http Get >> 127.0.0.1:10086/file/search
 // json: {tag:["标签1", "标签2"], page:1, limit:30}
 func (g *Gate) onSearch(ctx *gin.Context) {
@@ -106,15 +103,6 @@ func (g *Gate) onSearch(ctx *gin.Context) {
 	ctx.HTML(http.StatusOK, "search.tmpl", gin.H{
 		"result": string(data),
 	})
-}
-
-type NewFileReq struct {
-	Hash string   `json:"hash"`
-	Tag  []string `json:"tag"`
-}
-
-type NewFileRsp struct {
-	Result uint32 `json:"result"`
 }
 
 // http Post >> 127.0.0.1:10086/file/new
