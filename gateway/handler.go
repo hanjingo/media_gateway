@@ -26,7 +26,7 @@ func (g *Gate) onPlayerHtml(ctx *gin.Context) {
 	hash := ctx.DefaultQuery("hash", "")
 	Log().Debugf("hash=%s", hash)
 	ctx.HTML(http.StatusOK, "player.tmpl", gin.H{
-		"src": "/play?hash=" + hash,
+		"src": "/video/play?hash=" + hash,
 	})
 
 }

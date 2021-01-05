@@ -8,13 +8,13 @@ import (
 
 func (gate *Gate) InitHttpHandler() {
 	// file
-	gate.Http().SetHandler("GET", "/file/new/htm", gate.onNewFileHtml)
+	gate.Http().SetHandler("GET", "/file/new.html", gate.onNewFileHtml)
 	gate.Http().SetHandler("POST", "/file/new", gate.onNewFile)
 	gate.Http().SetHandler("GET", "/file/search", gate.onSearch)
 
 	// video
-	gate.Http().SetHandler("GET", "/video/play/htm", gate.onPlayHtml)
-	gate.Http().SetHandler("GET", "/video/player/htm", gate.onPlayerHtml)
+	gate.Http().SetHandler("GET", "/video/play.html", gate.onPlayHtml)
+	gate.Http().SetHandler("GET", "/video/player.html", gate.onPlayerHtml)
 	gate.Http().SetHandler("GET", "/video/play", gate.onPlay)
 }
 
