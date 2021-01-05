@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head> 
+<meta charset="utf-8"> 
+<title>play</title> 
+</head>
+<body>
+
+<br>
+<input id="input_hash" type="text" placeholder="请输入哈希" size="60">
+<br>
+<br>
+<input id="input_tag" type="text" placeholder="请输入标签; 标签之间用 # 隔开，如：电影#哈利波特" size="60">
+<br>
+<br>
+<button onclick="doAdd()">提交</button>
+
+<script>
+    function doAdd() {
+        var obj = {hash:"", tags: new Array()};
+        obj.hash = document.getElementById("input_hash").value;
+        tags = document.getElementById("input_tag").value;
+        obj.tags = tags.split("#");
+        console.log(obj, tags);
+        var xhr = new XMLHttpRequest();
+        xhr.open('POST', '/file/new', true);
+        xhr.setRequestHeader("Content-type","application/json");
+        // 获得回调
+        xhr.onreadystatechange = function(){
+            var result = "提交失败";
+            if(xhr.readyState == 4 && xhr.status == 200) {
+                var str = xhr.responseText;
+                var obj = JSON.parse(str);
+                if(obj.result == '1'){ result = "提交成功"; }
+                else{ result += "错误码:" + obj.result; }
+            }
+            window.alert(result);
+        }
+        xhr.send(JSON.stringify(obj));
+    }
+</script>
+
+</body>
+</html>
